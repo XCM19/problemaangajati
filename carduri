@@ -1,0 +1,194 @@
+#include<iostream>
+#include<string>
+#include<vector>
+
+
+
+class Card_calatorie{
+protected:
+    int id;
+    char tip;
+    int moment_ultima_validare;
+    
+public:
+    virtual void validare_calatorie(int, int)=0;
+    virtual void incarcare(int)=0;
+    virtual void afisare()=0;
+    virtual int get_id()=0;
+    
+    
+    virtual char get_tip()=0;
+    
+    
+    
+    
+    Card_calatorie(int id, char tip):
+    id(id), tip(tip) {}
+    Card_calatorie(){}
+    ~Card_calatorie(){}
+};
+
+class Card_autobuz: public Card_calatorie{
+    protected:
+    int sold;
+    
+    public:
+    Card_autobuz(int id, char tip, int sold):
+    Card_calatorie(id, tip), sold(sold){}
+    Card_autobuz(){}
+    
+    int get_sold(){return this->sold;}
+    
+    void afisare(){
+        std::cout<<id<<" ";
+        std::cout<<tip<<" ";
+        std::cout<<sold<<" ";
+        std::cout<<moment_ultima_validare<<"\n";
+    }
+    
+    void validare_calatorie(int id, int sold){
+    }
+    
+    
+    void incarcare(int sold){
+        this->sold+=sold;
+    }
+    
+    char get_tip(){return 'a';}
+    
+    int get_id(){return this->id;}
+    
+    ~Card_autobuz(){}
+    
+};
+
+class Card_metrou: public Card_calatorie{
+    protected:
+    int nr_calatorii;
+    
+    public:
+    Card_metrou(int id, char tip, int nr_calatorii):Card_calatorie(id, tip), nr_calatorii(nr_calatorii){}
+    Card_metrou(){}
+    
+    void afisare(){
+        std::cout<<id<<" ";
+        std::cout<<tip<<" ";
+        std::cout<<nr_calatorii<<" ";
+        std::cout<<moment_ultima_validare<<"\n";
+    }
+    
+    void validare_calatorie(int, int){}
+    
+    void incarcare(int nr_calatorii){
+        
+        this->nr_calatorii+=nr_calatorii;
+    }
+    
+    int get_nr_calatorii(){return this->nr_calatorii;}
+    
+    char get_tip(){return 'm';}
+    
+    int get_id(){return this->id;}
+    
+    ~Card_metrou(){}
+    
+};
+
+int main(){
+    int n;
+    std::cin>>n;
+    
+    std::vector<Card_calatorie*> card;
+    
+    for(int i=0; i<n; i++){
+        char tip;
+        int id;
+        std::cin>>tip;
+        std::cin>>id;
+        
+        if(tip=='a'){
+            int sold;
+            std::cin>>sold;
+            card.push_back(new Card_autobuz(id, tip, sold));
+        }
+            
+        if(tip=='m'){
+        int nr_calatorii;
+        std::cin>>nr_calatorii;
+        card.push_back(new Card_metrou(id, tip, nr_calatorii));
+        }
+    
+    }
+    
+    int comanda;
+    std::cin>>comanda;
+    
+    switch(comanda){
+        
+        case 1: {
+            for(auto c: card){
+                c->afisare();
+            }
+        }
+        break;
+        
+        case 2: {
+            
+            while(comanda==2){
+                int id_card;
+                int sold_nou;
+                int nr_calatorii;
+                std::cin>>id_card;
+                
+                
+                 for(auto c: card){
+                if(c->get_id()==id_card){
+                   
+                   if(c->get_tip()=='a'){
+                int sold_nou;
+                std::cin>>sold_nou;
+            c->incarcare(sold_nou);
+            }
+            
+            else if(c->get_tip()=='m'){
+                int numar;
+                std::cin>>numar;
+                c->incarcare(numar);
+            } 
+                }
+                 }
+                 
+                 
+                std::cin>>comanda;
+               
+            
+            }
+            
+            for(auto c: card){
+                c->afisare();
+            }
+        
+        
+        }
+        break;
+    }
+        
+        // case 3: {
+            
+        // }
+        // break;
+        
+        // case 4: {
+            
+        // }
+        // break;
+        
+        // case 5: {
+            
+        // }
+        // break;
+        
+        
+        return 0;
+        
+    }
