@@ -1,0 +1,252 @@
+PROBLEMA CIVILIZATII
+#include <stdio.h>
+#include <stdlib.h>
+struct muncitori{
+    int fermieri;
+    int padurari;
+    int fierari;
+    int mineri;
+};
+ 
+struct soldati{
+  int cavaleri;
+  int arcasi;
+  int calareti;
+};
+ 
+struct comercianti{
+  int negustoria;
+  int negustorise;
+};
+ 
+struct civilizatie{
+  struct muncitori m;
+  struct soldati s;
+  struct comercianti c;
+  int populatie_totala;
+  int populatie_soldati;
+};
+ 
+int main(){
+    int nr_civilizatii,test;
+    scanf("%d",&test);
+    scanf("%d", &nr_civilizatii);
+ 
+    struct civilizatie *civ=NULL;
+ 
+    civ=malloc(nr_civilizatii*sizeof(struct civilizatie));
+ 
+ 
+    switch(test){
+        case 1:
+        for(int i=0;i<nr_civilizatii;i++){
+        scanf("%d",&(civ+i)->m.fermieri);
+        scanf("%d",&(civ+i)->m.padurari);
+        scanf("%d",&(civ+i)->m.fierari);
+        scanf("%d",&(civ+i)->m.mineri);
+ 
+        scanf("%d",&(civ+i)->s.cavaleri);
+        scanf("%d",&(civ+i)->s.arcasi);
+        scanf("%d",&(civ+i)->s.calareti);
+ 
+        scanf("%d",&(civ+i)->c.negustoria);
+        scanf("%d",&(civ+i)->c.negustorise);
+ 
+    }
+        printf("%d\n", nr_civilizatii);
+         for(int i=0;i<nr_civilizatii;i++){
+        printf("%d\n",(civ+i)->m.fermieri);
+        printf("%d\n",(civ+i)->m.padurari);
+        printf("%d\n",(civ+i)->m.fierari);
+        printf("%d\n",(civ+i)->m.mineri);
+ 
+        printf("%d\n",(civ+i)->s.cavaleri);
+        printf("%d\n",(civ+i)->s.arcasi);
+        printf("%d\n",(civ+i)->s.calareti);
+ 
+        printf("%d\n",(civ+i)->c.negustoria);
+        printf("%d\n",(civ+i)->c.negustorise);
+ 
+    }
+ 
+        break;
+ 
+        case 2:
+        for(int i=0;i<nr_civilizatii;i++){
+        scanf("%d",&(civ+i)->m.fermieri);
+        scanf("%d",&(civ+i)->m.padurari);
+        scanf("%d",&(civ+i)->m.fierari);
+        scanf("%d",&(civ+i)->m.mineri);
+ 
+        scanf("%d",&(civ+i)->s.cavaleri);
+        scanf("%d",&(civ+i)->s.arcasi);
+        scanf("%d",&(civ+i)->s.calareti);
+ 
+        scanf("%d",&(civ+i)->c.negustoria);
+        scanf("%d",&(civ+i)->c.negustorise);
+ 
+    }
+        (civ+0)->populatie_totala=(civ+0)->m.fermieri+(civ+0)->m.padurari+(civ+0)->m.fierari+ (civ+0)->m.mineri+
+                                  (civ+0)->s.cavaleri+(civ+0)->s.arcasi+(civ+0)->s.calareti;
+        (civ+0)->populatie_soldati=(civ+0)->s.cavaleri+(civ+0)->s.arcasi+(civ+0)->s.calareti;
+        int max=(civ+0)->populatie_totala,k,c=0,max2=(civ+0)->populatie_soldati,x;
+        for(int i=0;i<nr_civilizatii;i++){
+            (civ+i)->populatie_totala=(civ+i)->m.fermieri+(civ+i)->m.padurari+(civ+i)->m.fierari+ (civ+i)->m.mineri+
+                    (civ+i)->s.cavaleri+(civ+i)->s.arcasi+(civ+i)->s.calareti;
+            (civ+i)->populatie_soldati=(civ+i)->s.cavaleri+(civ+i)->s.arcasi+(civ+i)->s.calareti;
+ 
+            if(max<(civ+i)->populatie_totala){
+                max=(civ+i)->populatie_totala;
+                k=i;
+                c++;
+            }
+ 
+            if(max2<(civ+i)->populatie_soldati){
+                max2=(civ+i)->populatie_soldati;
+                x=i;
+            }
+ 
+ 
+        }
+        if(c==1){
+                printf("%d",k);
+            }
+            else{ 
+                for(int i=0;i<nr_civilizatii;i++){
+                    if((civ+i)->populatie_totala==max){
+                        if((civ+i)->populatie_soldati==max2)
+                            printf("%d",x);
+                    }
+                }
+            }
+ 
+        break;
+    }
+    return 0;
+}
+ 
+ 
+ 
+ 
+ 
+ 
+PROBLEMA POLIGOANE
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+struct Punct{
+    float x;
+    float y;
+};
+struct Patrulater{
+  struct Punct punct[4];  
+};
+ 
+ 
+int main(){
+ 
+    int patrulatere;
+    int test;
+ 
+    scanf("%d", &patrulatere);
+ 
+    struct Patrulater *ptr= NULL;
+ 
+    ptr= malloc(patrulatere * sizeof(struct Patrulater));
+ 
+    for(int i=0;i<patrulatere;i++){
+        for(int j=0;j<4;j++){
+            scanf("%f%f",&((ptr+i)->punct[j]).x, &((ptr+i)->punct[j]).y);
+        }
+    }
+ 
+    scanf("%d", &test);
+ 
+    switch(test){
+        case 1:
+            for(int i=0;i<patrulatere;i++){
+                for(int j=0;j<4;j++){
+            printf("%.2f %.2f",((ptr+i)->punct[j]).x, ((ptr+i)->punct[j]).y);
+                printf("\n");
+        }
+            printf("\n");
+    }
+ 
+        break;
+ 
+        case 2:{
+        int c=0;
+        float lat1, lat2, lat3, lat4;
+        for(int i=0;i<patrulatere;i++){
+            lat1=sqrt(((ptr+i)->punct[0].x-(ptr+i)->punct[1].x)*((ptr+i)->punct[0].x-(ptr+i)->punct[1].x)
+                +((ptr+i)->punct[0].y-(ptr+i)->punct[1].y)*((ptr+i)->punct[0].y-(ptr+i)->punct[1].y));
+ 
+            lat2=sqrt(((ptr+i)->punct[1].x-(ptr+i)->punct[2].x)*((ptr+i)->punct[1].x-(ptr+i)->punct[2].x)
+                +((ptr+i)->punct[1].y-(ptr+i)->punct[2].y)*((ptr+i)->punct[1].y-(ptr+i)->punct[2].y));
+ 
+            lat3=sqrt(((ptr+i)->punct[2].x-(ptr+i)->punct[3].x)*((ptr+i)->punct[2].x-(ptr+i)->punct[3].x)
+                +((ptr+i)->punct[2].y-(ptr+i)->punct[3].y)*((ptr+i)->punct[2].y-(ptr+i)->punct[3].y));
+ 
+            lat4=sqrt(((ptr+i)->punct[3].x-(ptr+i)->punct[0].x)*((ptr+i)->punct[3].x-(ptr+i)->punct[0].x)
+                +((ptr+i)->punct[3].y-(ptr+i)->punct[0].y)*((ptr+i)->punct[3].y-(ptr+i)->punct[0].y));
+ 
+                if((lat1==lat2)&&(lat2==lat3)&&(lat3==lat4)){
+                   c++;
+                }
+        }
+            printf("%d", c);
+ 
+        }
+        break;
+    }
+    return 0;
+ 
+}
+ 
+ 
+ 
+ 
+PROBLEMA NR COMPLEX
+ 
+ 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+ 
+struct complex{
+    float re;
+    float im;
+    float modul;
+};
+ 
+ 
+int main(){
+     int n;
+     int k=0;
+    scanf("%d",&n);
+    struct complex *nr=NULL;
+ 
+    nr= malloc(n*sizeof(struct complex));
+ 
+    for(int i=0;i<n;i++){
+        scanf("%f",&(nr+i)->re);
+        scanf("%f",&(nr+i)->im);
+    }
+    float min=999;
+    for(int i=0;i<n;i++){
+ 
+ 
+        (nr+i)->modul=sqrt((nr+i)->re*(nr+i)->re+(nr+i)->im*(nr+i)->im);
+ 
+        if((nr+i)->modul<min){
+            min=(nr+i)->modul;
+            k=i;
+        }
+ 
+    }
+             printf("%.1f ",(nr+k)->re);
+             printf("%.1f", (nr+k)->im);
+ 
+ 
+    return 0;
+}
